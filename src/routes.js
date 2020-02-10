@@ -4,6 +4,7 @@ const auth = require('./middleware/auth');
 const routes = express.Router();
 
 const userController = require('./controller/UserController');
+const npcController = require('./controller/NpcController');
 
 //Criar um usuario e gerar o token de login
 routes.post('/user/signup', [
@@ -17,5 +18,11 @@ routes.post('/user/login', [
 ], userController.login);
 //Buscar o usuário através do token
 routes.get('/user/me', auth, userController.getUser);
+
+// --------------------------------- Rotas para NPC ---------------------------------------
+
+routes.post('/npcs', auth, [
+    check("name", "É necessário possuir ao menos o nome do NPC").not().isEmpty()    
+], npcController.store);
 
 module.exports = routes;
