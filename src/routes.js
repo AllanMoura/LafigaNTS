@@ -20,9 +20,11 @@ routes.post('/user/login', [
 routes.get('/user/me', auth, userController.getUser);
 
 // --------------------------------- Rotas para NPC ---------------------------------------
-
+//Método para armazenar um novo NPC - precisa estar logado para usar
 routes.post('/npcs', auth, [
     check("name", "É necessário possuir ao menos o nome do NPC").not().isEmpty()    
 ], npcController.store);
+//Metodo para buscar os npcs de um usuário específico;
+routes.get('/npcs', auth, npcController.get);
 
 module.exports = routes;

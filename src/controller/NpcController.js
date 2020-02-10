@@ -23,4 +23,15 @@ module.exports = {
             return res.status(500).json({msg: "Erro ao salvar usuário"});
         }
     },
+
+    async get(req, res) {
+        //quero buscar todos os npcs cujo userId seja igual ao id encontrado no token(que acrescenta tal id ao request)
+        try {
+            const npcs = await Npc.find({userId: req.user.id});
+            return res.status(200).json(npcs);
+        }catch(e) {
+            console.log(e);
+            return res.status(500).json({msg: "Erro ao buscar Npcs"})
+        }
+    },
 };
