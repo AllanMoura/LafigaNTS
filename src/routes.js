@@ -28,6 +28,7 @@ routes.post('/npcs', auth, [
 routes.get('/npcs', auth, npcController.get);
 //Método para buscar um único NPC
 routes.get('/npcs/:id', auth, npcController.show);
-
+//Método para atualizar npc
+routes.put('/npcs/:id', auth, npcController.update);
 
 module.exports = routes;

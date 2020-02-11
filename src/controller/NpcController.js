@@ -39,11 +39,12 @@ module.exports = {
     async show(req, res) {
         try {
             if(req.params.id == null){
-                return res.status(400).json({msg: "Identificador de Npcs não compatível"})
+                return res.status(400).json({msg: "Identificador de Npc não compatível"})
             }
 
             const npc = await Npc.findById(req.params.id);
-            if(req.user.id !== npc.userId){
+
+            if(req.user.id != npc.userId){
                 return res.status(401).json({msg: "Acesso de npc não autorizado"});
             }
 
@@ -53,4 +54,33 @@ module.exports = {
             return res.status(500).json({msg: "Erro ao buscar NPC."})
         }
     },
+    //Método para atualizar um NPC
+    async update(req, res) {
+
+        try {
+
+            if(req.params.id == null){
+                return res.status(400).json({msg: "Identificador de npc não compatível"})
+            }
+            
+            let npc = await Npc.findById(req.params.id);
+            
+            if(req.user.id != npc.userId){
+                return res.status(401).json({msg: "Acesso de npc não autorizado"});
+            }
+
+            if(req.body.name === ""){
+                return res.status(400).json({msg: "Nome não pode ser vazio"});
+            }
+
+            npc = await Npc.findByIdAndUpdate(req.params.id, req.body, {new: true, useFindAndModify: false});
+
+            return res.status(200).json(npc);
+        }catch(e) {
+            console.log(e);
+            return res.status(500).json({msg: "Erro ao atualizar NPC."});
+        }
+    },
+
+
 };
