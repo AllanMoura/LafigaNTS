@@ -26,5 +26,8 @@ routes.post('/npcs', auth, [
 ], npcController.store);
 //Metodo para buscar os npcs de um usuário específico;
 routes.get('/npcs', auth, npcController.get);
+//Método para buscar um único NPC
+routes.get('/npcs/:id', auth, npcController.show);
+
 
 module.exports = routes;

@@ -23,7 +23,7 @@ module.exports = {
             return res.status(500).json({msg: "Erro ao salvar usuário"});
         }
     },
-
+    //Busca a lista de NPCS vinculadas aquele usuário
     async get(req, res) {
         //quero buscar todos os npcs cujo userId seja igual ao id encontrado no token(que acrescenta tal id ao request)
         try {
@@ -32,6 +32,25 @@ module.exports = {
         }catch(e) {
             console.log(e);
             return res.status(500).json({msg: "Erro ao buscar Npcs"})
+        }
+    },
+    
+    //Método que retorna um npc para visualização
+    async show(req, res) {
+        try {
+            if(req.params.id == null){
+                return res.status(400).json({msg: "Identificador de Npcs não compatível"})
+            }
+
+            const npc = await Npc.findById(req.params.id);
+            if(req.user.id !== npc.userId){
+                return res.status(401).json({msg: "Acesso de npc não autorizado"});
+            }
+
+            return res.status(200).json(npc);
+        }catch(e) {
+            console.log(e);
+            return res.status(500).json({msg: "Erro ao buscar NPC."})
         }
     },
 };
