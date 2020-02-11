@@ -30,5 +30,7 @@ routes.get('/npcs', auth, npcController.get);
 routes.get('/npcs/:id', auth, npcController.show);
 //Método para atualizar npc
 routes.put('/npcs/:id', auth, npcController.update);
+//Método para remover um npc
+routes.delete('/npcs/:id', auth, npcController.delete);
 
 module.exports = routes;

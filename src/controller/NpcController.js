@@ -82,5 +82,26 @@ module.exports = {
         }
     },
 
+    async delete(req, res){
 
+        try{
+
+            if(req.params.id == null){
+                return res.status(400).json({msg: "Identificador de npc não compatível"})
+            }
+            
+            let npc = await Npc.findById(req.params.id);
+            
+            if(req.user.id != npc.userId){
+                return res.status(401).json({msg: "Acesso de npc não autorizado"});
+            }
+
+            npc = await Npc.findByIdAndRemove(npc.id, {useFindAndModify: false});
+
+            return res.status(200).send();
+        }catch(e){
+            console.log(e);
+            return res.status(500).json({msg: "Erro ao deletar NPC."});
+        }
+    }
 };
