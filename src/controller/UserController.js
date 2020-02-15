@@ -28,7 +28,7 @@ module.exports = {
             await user.save();
             const payload = {user: {id: user.id}};
 
-            jwt.sign(payload, "PINDAMOIANGABA", {expiresIn: 10000}, (err, token) =>{
+            jwt.sign(payload, "PINDAMOIANGABA", {expiresIn: '7d'}, (err, token) =>{
                 if(err){
                     throw err;
                 }
@@ -62,7 +62,7 @@ module.exports = {
             const payload = {
                 user: { id: user.id}
             };
-            jwt.sign(payload, "PINDAMOIANGABA", {expiresIn: 3600}, (err, token) => {
+            jwt.sign(payload, "PINDAMOIANGABA", {expiresIn: '7d'}, (err, token) => {
                 if(err) {
                     throw err;
                 }

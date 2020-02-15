@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
 const npcSchema = new mongoose.Schema ({
     name: {type: String, required: true},
@@ -9,5 +10,7 @@ const npcSchema = new mongoose.Schema ({
     userId: {type: mongoose.Schema.Types.ObjectId, ref: "user"},
     createdAt: {type: Date, default: Date.now()}
 });
+
+npcSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Npc', npcSchema);

@@ -27,7 +27,9 @@ module.exports = {
     async get(req, res) {
         //quero buscar todos os npcs cujo userId seja igual ao id encontrado no token(que acrescenta tal id ao request)
         try {
-            const npcs = await Npc.find({userId: req.user.id});
+            //const npcs = await Npc.find({userId: req.user.id});
+            const {page = 1} = req.query;
+            const npcs = await Npc.paginate({userId: req.user.id}, {page, limit: 10});
             return res.status(200).json(npcs);
         }catch(e) {
             console.log(e);
