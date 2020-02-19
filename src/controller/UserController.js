@@ -16,7 +16,7 @@ module.exports = {
         try{
             let user = await User.findOne({username});
             if(user != null){ // significa que ja existe um usuário com este nome
-                return res.status(400).json({errors: {msg: "Usuário ja cadastrado"}.array()});
+                return res.status(400).json({errors: "Usuário ja existe"});
             } // se passar daqui, significa que não foi encontrado nenhum usuario com o mesmo nome
 
             user = new User({username, password});//criando um novo usuário onde possui o username e password
