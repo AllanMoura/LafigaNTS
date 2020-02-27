@@ -23,6 +23,25 @@ module.exports = {
             return res.status(500).json({msg: "Erro ao salvar usuário"});
         }
     },
+    //Função que realiza uma busca baseada no id dos usuários
+    async search(req, res) {
+        const errors = validationResult(req);
+        //caso errors não seja vazio, houve erro na hora da validação
+        if(!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array()});
+        }
+
+        const { searchquery = ""} = req.body;
+        console.log();
+        try {
+            const { page = 1 } = req.query;
+            const npcs = await Npc.paginate({ userId: req.user.id, $or: [{name: new RegExp(searchquery)}, {race: new RegExp(searchquery)}, {occupation: new RegExp(searchquery)}, {location: new RegExp(searchquery)}]}, { page, limit: 10});
+            return res.status(200).json(npcs);
+        }catch (err) {
+            console.log(e);
+            return res.status(500).json({msg: "Erro ao buscar Npcs"});
+        }
+    },
     //Busca a lista de NPCS vinculadas aquele usuário
     async get(req, res) {
         //quero buscar todos os npcs cujo userId seja igual ao id encontrado no token(que acrescenta tal id ao request)
@@ -33,7 +52,7 @@ module.exports = {
             return res.status(200).json(npcs);
         }catch(e) {
             console.log(e);
-            return res.status(500).json({msg: "Erro ao buscar Npcs"})
+            return res.status(500).json({msg: "Erro ao buscar Npcs"});
         }
     },
     

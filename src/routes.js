@@ -24,6 +24,10 @@ routes.get('/user/me', auth, userController.getUser);
 routes.post('/npcs', auth, [
     check("name", "É necessário possuir ao menos o nome do NPC").not().isEmpty()    
 ], npcController.store);
+//Query para realizar a pesquisa
+routes.post('/npcs/search', auth, [
+    check("searchquery", "Requisição precisa do parametro searchquery").not().isEmpty()
+], npcController.search);
 //Metodo para buscar os npcs de um usuário específico;
 routes.get('/npcs', auth, npcController.get);
 //Método para buscar um único NPC
